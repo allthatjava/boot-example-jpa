@@ -22,9 +22,14 @@ repositories {
 	mavenCentral()
 }
 
-
 dependencies {
-	compile('org.springframework.boot:spring-boot-starter-data-jpa')
-	runtime('com.h2database:h2')
-	testCompile('org.springframework.boot:spring-boot-starter-test')
+	compile 'org.springframework.boot:spring-boot-starter'
+	compile 'org.springframework.boot:spring-boot-starter-data-jpa'
+	compile 'org.springframework.boot:spring-boot-starter-web' 		// Just so h2 db can run
+
+	testCompile 'org.springframework.boot:spring-boot-starter-test'
+	testCompile('junit:junit')
+	testCompile('org.assertj:assertj-core')
+
+	runtime 'com.h2database:h2'		// Test Database
 }
