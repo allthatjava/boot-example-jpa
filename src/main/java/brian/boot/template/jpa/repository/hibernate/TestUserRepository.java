@@ -1,6 +1,6 @@
-package brian.boot.template.jpa.repository;
+package brian.boot.template.jpa.repository.hibernate;
 
-import brian.boot.template.jpa.domain.TestUser;
+import brian.boot.template.jpa.domain.hibernate.TestUser;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

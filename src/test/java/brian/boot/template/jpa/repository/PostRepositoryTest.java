@@ -1,7 +1,8 @@
 package brian.boot.template.jpa.repository;
 
 import brian.boot.template.jpa.BootTemplateJpaApplication;
-import brian.boot.template.jpa.domain.Post;
+import brian.boot.template.jpa.domain.hibernate.Post;
+import brian.boot.template.jpa.repository.hibernate.PostRepository;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -30,11 +31,11 @@ public class PostRepositoryTest {
         repo.deleteAll();
 
         Post p1 = new Post("tester1", "subject1", "content1");
-        Post p2 = new Post("tester1", "subject1", "content1");
-        Post p3 = new Post("tester1", "subject1", "content1");
-        Post p4 = new Post("tester1", "subject1", "content1");
-        Post p5 = new Post("tester1", "subject1", "content1");
-        Post p6 = new Post("tester1", "subject1", "content1");
+        Post p2 = new Post("tester1", "subject2", "content2");
+        Post p3 = new Post("tester1", "subject3", "content3");
+        Post p4 = new Post("tester1", "subject4", "content4");
+        Post p5 = new Post("tester1", "subject5", "content5");
+        Post p6 = new Post("tester1", "subject6", "content6");
 
         repo.save(p1);
         repo.save(p2);

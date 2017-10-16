@@ -1,4 +1,4 @@
-package brian.boot.template.jpa.domain;
+package brian.boot.template.jpa.domain.hibernate;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
