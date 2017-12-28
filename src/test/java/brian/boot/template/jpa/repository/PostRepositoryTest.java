@@ -16,11 +16,14 @@ import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+@ActiveProfiles("test")
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringBootTest(classes = { BootTemplateJpaApplication.class})
 @DataJpaTest
-@ActiveProfiles("test")
 public class PostRepositoryTest {
+
+//    @PersistenceContext(unitName = "primary")
+//    private EntityManager entityManager;
 
     @Autowired
     PostRepository repo;
@@ -55,7 +58,7 @@ public class PostRepositoryTest {
     }
 
     @Test
-    public void testCRUD_shouldBeAdded(){
+    public void testCRUD_shouldBeSusscessOnCRUD(){
         // Original Size
         List<Post> list = repo.findAll();
         int originalSize = list.size();

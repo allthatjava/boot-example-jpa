@@ -2,11 +2,7 @@ package brian.boot.template.jpa.config;
 
 //@Configuration
 ////@PropertySource({ "classpath:persistence-multiple-db.properties" })
-//@EnableJpaRepositories(
-//        basePackages = "brian.boot.template.jpa.domain.mybatis",
-//        entityManagerFactoryRef = "entityManager",
-//        transactionManagerRef = "productTransactionManager"
-//)
+//@EnableJpaRepositories(basePackages = "brian.boot.template.jpa.repository.mybatis", entityManagerFactoryRef = "mybatisEntityManager", transactionManagerRef = "mybatisTransactionManager")
 public class H2ConfigWithMyBatis {
 //    @Autowired
 //    private Environment env;
@@ -16,12 +12,12 @@ public class H2ConfigWithMyBatis {
 //     *
 //     * @return
 //     */
-//    @Bean(name = "entityManager2")
+//    @PersistenceContext(unitName = "secondary")
+//    @Bean(name = "mybatisEntityManager")
 //    public LocalContainerEntityManagerFactoryBean entityManager() {
-//        LocalContainerEntityManagerFactoryBean em
-//                = new LocalContainerEntityManagerFactoryBean();
+//        LocalContainerEntityManagerFactoryBean em = new LocalContainerEntityManagerFactoryBean();
 //        em.setDataSource(dataSource());
-//        em.setPackagesToScan( new String[] { "org.baeldung.persistence.multiple.model.product" });
+//        em.setPackagesToScan( new String[] { "brian.boot.template.jpa.repository.mybatis" });
 //
 //        HibernateJpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
 //        em.setJpaVendorAdapter(vendorAdapter);
@@ -33,6 +29,7 @@ public class H2ConfigWithMyBatis {
 //        return em;
 //    }
 //
+//    @Bean
 //    private DataSource dataSource() {
 //
 //        DriverManagerDataSource dataSource = new DriverManagerDataSource();
@@ -49,7 +46,7 @@ public class H2ConfigWithMyBatis {
 //     *
 //     * @return
 //     */
-//    @Bean
+//    @Bean(name = "mybatisTransactionManager")
 //    public PlatformTransactionManager productTransactionManager() {
 //
 //        JpaTransactionManager transactionManager = new JpaTransactionManager();
