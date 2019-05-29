@@ -1,4 +1,4 @@
-package brian.boot.template.jpa.config;
+package brian.template.boot.jpa.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;

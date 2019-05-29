@@ -1,8 +1,9 @@
-package brian.boot.template.jpa.repository;
+package brian.template.boot.jpa.repository;
 
-import brian.boot.template.jpa.BootTemplateJpaApplication;
-import brian.boot.template.jpa.domain.hibernate.Post;
-import brian.boot.template.jpa.repository.hibernate.PostRepository;
+import brian.template.boot.jpa.BootTemplateJpaApplication;
+import brian.template.boot.jpa.domain.hibernate.Post;
+import brian.template.boot.jpa.repository.hibernate.PostRepository;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;

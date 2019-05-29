@@ -1,4 +1,4 @@
-package brian.boot.template.jpa.repository;
+package brian.template.boot.jpa.repository;
 
 //@RunWith(SpringRunner.class)
 //@DataJpaTest

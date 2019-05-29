@@ -1,8 +1,8 @@
-package brian.boot.template.jpa.repository.mybatis;
-
-import brian.boot.template.jpa.domain.mybatis.Province;
+package brian.template.boot.jpa.repository.mybatis;
 
 import java.util.List;
+
+import brian.template.boot.jpa.domain.mybatis.Province;
 
 public interface ProvoinceMapper {
 

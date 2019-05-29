@@ -1,4 +1,4 @@
-package brian.boot.template.jpa;
+package brian.template.boot.jpa;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;

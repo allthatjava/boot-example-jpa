@@ -1,4 +1,4 @@
-package brian.boot.template.jpa.config;
+package brian.template.boot.jpa.config;
 
 //@Configuration
 ////@PropertySource({ "classpath:persistence-multiple-db.properties" })

@@ -1,4 +1,4 @@
-package brian.boot.template.jpa.domain.mybatis;
+package brian.template.boot.jpa.domain.mybatis;
 
 public class Province {
     private int provinceCode;

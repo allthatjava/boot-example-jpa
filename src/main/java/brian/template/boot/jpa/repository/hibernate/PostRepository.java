@@ -1,9 +1,10 @@
-package brian.boot.template.jpa.repository.hibernate;
+package brian.template.boot.jpa.repository.hibernate;
 
-import brian.boot.template.jpa.domain.hibernate.Post;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
+
+import brian.template.boot.jpa.domain.hibernate.Post;
 
 @Repository
 @Transactional(value = "hibernateEntitsyManager")
