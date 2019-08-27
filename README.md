@@ -29,19 +29,6 @@ CREATE TABLE POST(
     CREATED_DATETIME DATETIME,
     FOREIGN KEY (USER_ID) REFERENCES TEST_USER(USER_ID)
 );
-
-CREATE TABLE PROVINCE(
-    PROVINCE_ID INT PRIMARY KEY,
-    NAME VARCHAR(50)
-);
-
-CREATE TABLE CITY(
-    CITY_ID INT PRIMARY KEY,
-    PROVINCE_ID INT NOT NULL,
-    NAME VARCHAR(50),
-    FOREIGN KEY (PROVINCE_ID) REFERENCE PROVINCE(PROVINCE_ID)
-);
-
 ```
 
 #### Add some test data
@@ -60,15 +47,6 @@ INSERT INTO POST(USER_ID, SUBJECT, CONTENT, CREATED_DATETIME) VALUES( 'tester1',
 INSERT INTO POST(USER_ID, SUBJECT, CONTENT, CREATED_DATETIME) VALUES( 'tester1', 'Test Subject 7', 'Contents of Test subject 7', CURRENT_TIMESTAMP());
 INSERT INTO POST(USER_ID, SUBJECT, CONTENT, CREATED_DATETIME) VALUES( 'tester3', 'Test Subject 8', 'Contents of Test subject 8', CURRENT_TIMESTAMP());
 INSERT INTO POST(USER_ID, SUBJECT, CONTENT, CREATED_DATETIME) VALUES( 'tester1', 'Test Subject 9', 'Contents of Test subject 9', CURRENT_TIMESTAMP());
-
-// myBatis side test data
-INSERT INTO PROVINCE( PROVINCE_ID, NAME ) VALUES( 1, "ONTARIO");
-INSERT INTO PROVINCE( PROVINCE_ID, NAME ) VALUES( 2, "BRITISH COLOMBIA");
-
-INSERT INTO CITY( CITY_ID, PROVINCE_ID, NAME) VALUES( 1, 1, "TORONTO");
-INSERT INTO CITY( CITY_ID, PROVINCE_ID, NAME) VALUES( 2, 1, "OTTAWA");
-INSERT INTO CITY( CITY_ID, PROVINCE_ID, NAME) VALUES( 3, 1, "OTTAWA");
-
 ```
 
 #### H2 setup - (in application.properties)
@@ -78,11 +56,10 @@ spring.h2.console.enabled=true
 spring.h2.console.path=/h2-console
 
 # Datasource
-spring.datasource.url=jdbc:h2:file:~/test
+spring.datasource.url=jdbc:h2:file:~/test;DB_CLOSE_ON_EXIT=FALSE
 spring.datasource.username=sa
 spring.datasource.password=
 spring.datasource.driver-class-name=org.h2.Driver
-
 spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.H2Dialect
 spring.jpa.properties.hibernate,format_sql=true
 spring.jpa.show-sql=true

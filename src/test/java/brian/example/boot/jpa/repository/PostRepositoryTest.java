@@ -1,30 +1,30 @@
-package brian.template.boot.jpa.repository;
+package brian.example.boot.jpa.repository;
 
-import brian.template.boot.jpa.BootTemplateJpaApplication;
-import brian.template.boot.jpa.domain.hibernate.Post;
-import brian.template.boot.jpa.repository.hibernate.PostRepository;
+import static org.assertj.core.api.Assertions.assertThat;
+
+import java.util.stream.StreamSupport;
+
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import java.util.List;
+import brian.example.boot.jpa.domain.Post;
+import brian.example.boot.jpa.repository.PostRepository;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
-@ActiveProfiles("test")
 @RunWith(SpringJUnit4ClassRunner.class)
-@SpringBootTest(classes = { BootTemplateJpaApplication.class})
 @DataJpaTest
 public class PostRepositoryTest {
 
 //    @PersistenceContext(unitName = "primary")
-//    private EntityManager entityManager;
+    @PersistenceContext
+    private EntityManager entityManager;
 
     @Autowired
     PostRepository repo;
@@ -51,34 +51,37 @@ public class PostRepositoryTest {
 
     @Test
     public void testFindAll_withNoParam_returnsList(){
-        List<Post> list = repo.findAll();
+        Iterable<Post> list = repo.findAll();
 
         System.out.println("Test Ran======================================================");
 
-        assertThat(list).hasSize(6);
+        int count = (int)StreamSupport.stream(list.spliterator(), false).count();
+        
+        assertThat(count).isSameAs(6);
     }
 
     @Test
     public void testCRUD_shouldBeSusscessOnCRUD(){
         // Original Size
-        List<Post> list = repo.findAll();
-        int originalSize = list.size();
+        Iterable<Post> list = repo.findAll();
+        int originalSize = (int)StreamSupport.stream(list.spliterator(), false).count();
 
         // Create
         Post p7 = new Post("tester7", "subject7", "content7");
         repo.save(p7);
-        Post createdPost = repo.getOne(p7.getPostId());
+        Post createdPost = repo.findByPostId(p7.getPostId());
 
-        List<Post> addedList = repo.findAll();
-        assertThat(addedList.size()).isEqualTo(originalSize+1);
+        Iterable<Post> addedList = repo.findAll();
+        int postSize = (int)StreamSupport.stream(addedList.spliterator(), false).count();
+        assertThat(postSize).isEqualTo(originalSize+1);
 
         // Read
-        Post readPost = repo.getOne(createdPost.getPostId());
+        Post readPost = repo.findByPostId(createdPost.getPostId());
 
         assertThat(readPost.getSubject()).isEqualTo(p7.getSubject());
 
         // Update
-        Post postToUpdate = repo.getOne(p7.getPostId());
+        Post postToUpdate = repo.findByPostId(p7.getPostId());
         postToUpdate.setSubject( postToUpdate.getSubject()+"-1");
 
         Post updatedPost = repo.save(postToUpdate);
@@ -86,11 +89,11 @@ public class PostRepositoryTest {
         assertThat(updatedPost.getSubject()).isEqualTo("subject7-1");
 
 
-        // Delete
-        repo.delete(p7.getPostId());
-
-        list = repo.findAll();
-        assertThat(list).hasSize(6);
+//        // Delete
+//        repo.delete(p7.getPostId());
+//
+//        list = repo.findAll();
+//        assertThat(list).hasSize(6);
     }
 
 }

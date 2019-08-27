@@ -1,4 +1,4 @@
-package brian.template.boot.jpa.domain.hibernate;
+package brian.example.boot.jpa.domain;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -11,7 +11,6 @@ public class Post {
     @GeneratedValue(strategy= GenerationType.AUTO)
     @Column(name = "post_id")
     private int postId;
-    @Column(name = "user_id")
     private String userId;
     private String subject;
     private String content;
@@ -29,10 +28,6 @@ public class Post {
 
     public int getPostId() {
         return postId;
-    }
-
-    public String getUserId() {
-        return userId;
     }
 
     public String getSubject() {
@@ -62,4 +57,13 @@ public class Post {
     public void setCreatedDatetime(LocalDateTime createdDatetime) {
         this.createdDatetime = createdDatetime;
     }
+
+	public String getUserId() {
+		return userId;
+	}
+
+	public void setUserId(String userId) {
+		this.userId = userId;
+	}
+    
 }
