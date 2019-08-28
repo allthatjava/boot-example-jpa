@@ -3,6 +3,7 @@ package brian.example.boot.jpa.repository;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.List;
+import java.util.Set;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -37,13 +38,16 @@ public class TestUserRepositoryTest {
     	repo.save(t2);
     	repo.save(t3);
     	
-    	Post p1 = new Post("tester1", "Test Subject 1", "Contents of Test 1");
-    	Post p2 = new Post("tester2", "Test Subject 2", "Contents of Test 2");
-    	Post p3 = new Post("tester1", "Test Subject 3", "Contents of Test 3");
+    	Post p1 = new Post(t1, "Test Subject 1", "Contents of Test 1");
+    	Post p2 = new Post(t2, "Test Subject 2", "Contents of Test 2");
+    	Post p3 = new Post(t1, "Test Subject 3", "Contents of Test 3");
     	
-    	postRepo.save(p1);
-    	postRepo.save(p2);
-    	postRepo.save(p3);
+    	t1.getPosts().add(p1);
+    	t2.getPosts().add(p2);
+    	t1.getPosts().add(p3);
+    	
+    	repo.save(t1);
+    	repo.save(t2);
     	System.out.println("------------- Init ------------------------------ END");
     }
     
@@ -68,17 +72,15 @@ public class TestUserRepositoryTest {
         assertThat(list).hasSize(3);
         System.out.println("------------- FindAll ------------------------------ END");
     }
-    
  
     @Test
     public void testFindByUserId_withTester1_returnsTestUser(){
     	System.out.println("------------- Find by User Id ------------------------------ START");
         TestUser tester1 = repo.findByUserId("tester1");
         
-        List<Post> posts = tester1.getPosts();
+        Set<Post> posts = tester1.getPosts();
 
         assertThat(posts).hasSize(2);
         System.out.println("------------- Find by User Id ------------------------------ END");
     }
- 
 }

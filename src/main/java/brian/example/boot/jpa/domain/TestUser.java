@@ -1,11 +1,13 @@
 package brian.example.boot.jpa.domain;
 
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -14,17 +16,21 @@ import javax.persistence.Table;
 public class TestUser {
 
     @Id
+    @Column(name="user_id")
     private String userId;
     private String pw;
     private String name;
     private String title;
     private int age;
     
-    @OneToMany(cascade = CascadeType.ALL)
-    @JoinColumn(name="userId")
-    private List<Post> posts;
+    @OneToMany( cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "testUser")
+    private Set<Post> posts = new HashSet<>();
 
     public TestUser(){
+    }
+    
+    public TestUser(String userId) {
+    	this.userId = userId;
     }
 
     public String getUserId() {
@@ -63,11 +69,11 @@ public class TestUser {
         this.age = age;
     }
 
-	public List<Post> getPosts() {
+	public Set<Post> getPosts() {
 		return posts;
 	}
 
-	public void setPosts(List<Post> posts) {
+	public void setPosts(Set<Post> posts) {
 		this.posts = posts;
 	}
 

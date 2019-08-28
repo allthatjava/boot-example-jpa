@@ -12,11 +12,10 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import brian.example.boot.jpa.domain.Post;
-import brian.example.boot.jpa.repository.PostRepository;
+import brian.example.boot.jpa.domain.TestUser;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @DataJpaTest
@@ -34,12 +33,12 @@ public class PostRepositoryTest {
 
         repo.deleteAll();
 
-        Post p1 = new Post("tester1", "subject1", "content1");
-        Post p2 = new Post("tester1", "subject2", "content2");
-        Post p3 = new Post("tester1", "subject3", "content3");
-        Post p4 = new Post("tester1", "subject4", "content4");
-        Post p5 = new Post("tester1", "subject5", "content5");
-        Post p6 = new Post("tester1", "subject6", "content6");
+        Post p1 = new Post(new TestUser("tester1"), "subject1", "content1");
+        Post p2 = new Post(new TestUser("tester2"), "subject2", "content2");
+        Post p3 = new Post(new TestUser("tester1"), "subject3", "content3");
+        Post p4 = new Post(new TestUser("tester2"), "subject4", "content4");
+        Post p5 = new Post(new TestUser("tester3"), "subject5", "content5");
+        Post p6 = new Post(new TestUser("tester1"), "subject6", "content6");
 
         repo.save(p1);
         repo.save(p2);
@@ -67,7 +66,7 @@ public class PostRepositoryTest {
         int originalSize = (int)StreamSupport.stream(list.spliterator(), false).count();
 
         // Create
-        Post p7 = new Post("tester7", "subject7", "content7");
+        Post p7 = new Post(new TestUser("tester7"), "subject7", "content7");
         repo.save(p7);
         Post createdPost = repo.findByPostId(p7.getPostId());
 

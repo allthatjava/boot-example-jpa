@@ -11,16 +11,19 @@ public class Post {
     @GeneratedValue(strategy= GenerationType.AUTO)
     @Column(name = "post_id")
     private int postId;
-    private String userId;
     private String subject;
     private String content;
     @Column(name="created_datetime")
     private LocalDateTime createdDatetime;
+    
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name="user_id", nullable = false)
+    private TestUser testUser;
 
     public Post(){}
 
-    public Post(String userId, String subject, String content){
-        this.userId = userId;
+    public Post(TestUser testUser, String subject, String content){
+        this.testUser = testUser;
         this.subject = subject;
         this.content = content;
         this.createdDatetime = LocalDateTime.now();
@@ -58,12 +61,13 @@ public class Post {
         this.createdDatetime = createdDatetime;
     }
 
-	public String getUserId() {
-		return userId;
+	public TestUser getTestUser() {
+		return testUser;
 	}
 
-	public void setUserId(String userId) {
-		this.userId = userId;
+	public void setTestUser(TestUser testUser) {
+		this.testUser = testUser;
 	}
+
     
 }
