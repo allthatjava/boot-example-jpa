@@ -1,13 +1,12 @@
 package brian.example.boot.jpa.repository;
 
-import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
 import brian.example.boot.jpa.domain.TestUser;
 
 @Repository
-//@Transactional(value = "hibernateEntityManager")
-public interface TestUserRepository extends JpaRepository<TestUser, Integer>{
+public interface TestUserRepository extends CrudRepository<TestUser, Integer>{
 
 	public TestUser findByUserId(String userId);
 

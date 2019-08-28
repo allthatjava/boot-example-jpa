@@ -2,6 +2,7 @@ package brian.example.boot.jpa.repository;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
@@ -67,7 +68,9 @@ public class TestUserRepositoryTest {
     @Test
     public void testFindAll_withNoParam_returnsList(){
     	System.out.println("------------- FindAll ------------------------------ START");
-        List<TestUser> list = repo.findAll();
+    	
+        List<TestUser> list = new ArrayList<>(); 
+        repo.findAll().forEach(list::add);
 
         assertThat(list).hasSize(3);
         System.out.println("------------- FindAll ------------------------------ END");

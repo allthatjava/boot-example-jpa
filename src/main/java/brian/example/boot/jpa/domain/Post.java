@@ -1,6 +1,9 @@
 package brian.example.boot.jpa.domain;
 
 import javax.persistence.*;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.time.LocalDateTime;
 
 @Entity
@@ -8,9 +11,11 @@ import java.time.LocalDateTime;
 public class Post {
 
     @Id
-    @GeneratedValue(strategy= GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "post_id")
     private int postId;
+    @Column(name = "user_id", insertable = false, updatable = false)
+    private String userId;		// Just to display the user Id
     private String subject;
     private String content;
     @Column(name="created_datetime")
@@ -18,9 +23,12 @@ public class Post {
     
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="user_id", nullable = false)
+    @JsonIgnore
     private TestUser testUser;
 
-    public Post(){}
+    public Post(){
+    	this.createdDatetime = LocalDateTime.now();
+    }
 
     public Post(TestUser testUser, String subject, String content){
         this.testUser = testUser;
@@ -69,5 +77,11 @@ public class Post {
 		this.testUser = testUser;
 	}
 
-    
+	public String getUserId() {
+		return userId;
+	}
+
+	public void setUserId(String userId) {
+		this.userId = userId;
+	}
 }

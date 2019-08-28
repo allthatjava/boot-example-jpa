@@ -6,7 +6,6 @@ import org.springframework.stereotype.Repository;
 import brian.example.boot.jpa.domain.Post;
 
 @Repository
-//@Transactional(value = "hibernateEntityManager")
 public interface PostRepository extends CrudRepository<Post, Integer>{
 	
 	public Post findByPostId(Integer postId);

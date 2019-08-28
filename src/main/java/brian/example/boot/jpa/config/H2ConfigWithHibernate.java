@@ -19,7 +19,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 @Configuration
 @EnableTransactionManagement
-@EnableJpaRepositories(basePackages = "brian.template.boot.jpa.repository", 
+@EnableJpaRepositories(basePackages = "brian.example.boot.jpa.repository", 
 						entityManagerFactoryRef = "entityManager")
 public class H2ConfigWithHibernate {
 
@@ -30,7 +30,7 @@ public class H2ConfigWithHibernate {
     public LocalContainerEntityManagerFactoryBean entityManager() {
         LocalContainerEntityManagerFactoryBean em = new LocalContainerEntityManagerFactoryBean();
         em.setDataSource(dataSource());
-        em.setPackagesToScan(new String[] { "brian.template.boot.jpa.domain" });
+        em.setPackagesToScan(new String[] { "brian.example.boot.jpa.domain" });
 
         JpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
         em.setJpaVendorAdapter(vendorAdapter);
