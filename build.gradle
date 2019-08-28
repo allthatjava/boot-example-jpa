@@ -25,8 +25,6 @@ dependencies {
 	compile 'org.springframework.boot:spring-boot-starter-data-jpa'	// JPA - Hibernate
 	compile 'org.springframework.boot:spring-boot-starter-web' 		// Just so h2 db can run
 
-//	compile 'org.mybatis.spring.boot:mybatis-spring-boot-starter:1.0.0' // myBatis
-
 	testCompile 'org.springframework.boot:spring-boot-starter-test'
 	testCompile('junit:junit')
 	testCompile('org.assertj:assertj-core')
