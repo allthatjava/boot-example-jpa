@@ -25,15 +25,6 @@ public class PostService{
 		return repo.findByPostId(Integer.valueOf(postId));
 	}
 	
-	public Post savePost(Post post) {
-		
-		return repo.save(post);
-	}
-	
-	public void deletePost(Post post) {
-		repo.delete(post);
-	}
-
 	public List<Post> getAllPosts() {
 		List<Post> list = new ArrayList<>();
 		repo.findAll().forEach(list::add);

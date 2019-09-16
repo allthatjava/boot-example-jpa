@@ -1,5 +1,5 @@
 # Spring Boot Web Application Template
-Example of JPA Application. Just for the testing purpose, Embedded H2 database is used.
+Example of JPA Application. Just for the testing purpose, Embedded H2 database is used. `master` branch has a minimum setup, please after read through the `master` branch, checkout the `step2` branch for further example.
 
 ## Environment
 * Framework : Spring Boot - 2.1.6

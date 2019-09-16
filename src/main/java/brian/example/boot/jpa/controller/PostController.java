@@ -43,32 +43,4 @@ public class PostController {
 		
 		return new ResponseEntity<>( post, HttpStatus.OK );
 	}
-	
-	@PostMapping(value="/post")
-	public ResponseEntity<Post> addPost(@RequestBody Post post)
-	{
-		post.setTestUser(new TestUser(post.getUserId()));
-		post = service.savePost(post);
-		
-		return new ResponseEntity<>( post, HttpStatus.OK );
-	}
-	
-	@DeleteMapping(value="/post/{postId}")
-	public ResponseEntity<Post> deletePost(@PathVariable("postId") int postId)
-	{
-		Post post = new Post();
-		post.setPostId(postId);
-		service.deletePost(post);
-		
-		return new ResponseEntity<>( post, HttpStatus.OK );
-	}
-	
-	@PutMapping(value="/post/{postId}")
-	public ResponseEntity<Post>  updatePost(@RequestBody Post post)
-	{
-		post.setTestUser(new TestUser(post.getUserId()));
-		post = service.savePost(post);
-		
-		return new ResponseEntity<>( post, HttpStatus.OK );
-	} 
 }
