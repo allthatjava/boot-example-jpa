@@ -1,19 +1,12 @@
 package brian.example.boot.jpa.domain;
 
+import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
-
 @Entity
-@Table(name = "TEST_USER")
-public class TestUser {
+@Table(name = "USER")
+public class User {
 
     @Id
     @Column(name="user_id")
@@ -26,10 +19,10 @@ public class TestUser {
     @OneToMany( cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "testUser")
     private Set<Post> posts = new HashSet<>();
 
-    public TestUser(){
+    public User(){
     }
     
-    public TestUser(String userId) {
+    public User(String userId) {
     	this.userId = userId;
     }
 

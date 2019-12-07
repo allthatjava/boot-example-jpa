@@ -1,11 +1,7 @@
 package brian.example.boot.jpa.repository;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
-
+import brian.example.boot.jpa.domain.Post;
+import brian.example.boot.jpa.domain.User;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -13,26 +9,29 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import brian.example.boot.jpa.domain.Post;
-import brian.example.boot.jpa.domain.TestUser;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @DataJpaTest
-public class TestUserRepositoryTest {
+public class UserRepositoryTest {
 
     @Autowired
-    TestUserRepository repo;
+	UserRepository repo;
     @Autowired
     PostRepository postRepo;
     
     @Before
     public void init() {
     	System.out.println("------------- Init ------------------------------ START");
-    	TestUser t1 = new TestUser();
+    	User t1 = new User();
     	t1.setAge(11); t1.setName("Brian Heo"); t1.setPw("1234"); t1.setTitle("Sir"); t1.setUserId("tester1");
-    	TestUser t2 = new TestUser();
+    	User t2 = new User();
     	t2.setAge(22); t2.setName("Phil Lee"); t2.setPw("1234"); t2.setTitle("Mr."); t2.setUserId("tester2");
-    	TestUser t3 = new TestUser();
+    	User t3 = new User();
     	t3.setAge(33); t3.setName("Gerrard Lee"); t3.setPw("1234"); t3.setUserId("tester3");
     	
     	repo.save(t1);
@@ -55,10 +54,10 @@ public class TestUserRepositoryTest {
     @Test
     public void testSave_withValidTestUser_shouldReturnTrue() {
     	System.out.println("------------- Save ------------------------------ START");
-    	TestUser t = new TestUser();
+    	User t = new User();
     	t.setAge(44); t.setName("Jun Lee"); t.setPw("1234"); t.setUserId("tester4");
     	
-    	TestUser addedUser = repo.save(t);
+    	User addedUser = repo.save(t);
     	
     	assertThat(addedUser).isEqualTo(t);
     	assertThat(repo.findAll()).hasSize(4);
@@ -69,7 +68,7 @@ public class TestUserRepositoryTest {
     public void testFindAll_withNoParam_returnsList(){
     	System.out.println("------------- FindAll ------------------------------ START");
     	
-        List<TestUser> list = new ArrayList<>(); 
+        List<User> list = new ArrayList<>();
         repo.findAll().forEach(list::add);
 
         assertThat(list).hasSize(3);
@@ -79,7 +78,7 @@ public class TestUserRepositoryTest {
     @Test
     public void testFindByUserId_withTester1_returnsTestUser(){
     	System.out.println("------------- Find by User Id ------------------------------ START");
-        TestUser tester1 = repo.findByUserId("tester1");
+        User tester1 = repo.findByUserId("tester1");
         
         Set<Post> posts = tester1.getPosts();
 

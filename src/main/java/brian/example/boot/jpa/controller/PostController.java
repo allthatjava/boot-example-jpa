@@ -1,23 +1,13 @@
 package brian.example.boot.jpa.controller;
 
-import java.util.List;
-
+import brian.example.boot.jpa.service.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
 
-import brian.example.boot.jpa.domain.Post;
-import brian.example.boot.jpa.domain.TestUser;
-import brian.example.boot.jpa.service.PostService;
-
-@RestController
+@Controller
 public class PostController {
 
 	private PostService service;
@@ -29,18 +19,18 @@ public class PostController {
 		this.service = service;
 	}
 	
-	@GetMapping(value="/posts")
-	public ResponseEntity<List<Post>> getAllPosts() {
-		List<Post> list = service.getAllPosts();
+	@GetMapping(value={"/posts", "/posts/index.html"})
+	public String getAllPosts(Model model) {
+		model.addAttribute("posts", service.getAllPosts());
 		
-		return new ResponseEntity<>( list, HttpStatus.OK );
+		return "post/index";
 	}
 	
 	@GetMapping(value="/post/{postId}")
-	public ResponseEntity<Post> getPost(@PathVariable("postId") int postId)
+	public String getPost(Model model, @PathVariable("postId") Integer postId)
 	{
-		Post post = service.getPost(postId);
-		
-		return new ResponseEntity<>( post, HttpStatus.OK );
+		model.addAttribute("post", service.getPost(postId));
+
+		return "post/post";
 	}
 }

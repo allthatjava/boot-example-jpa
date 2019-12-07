@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" >
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <div>
+        <div style="background-color: #CCCCEE">
+            <span><b>Subject:</b></span><span th:text="${post.subject}">Post Subject</span>
+        </div>
+        <div style="background-color: #EEEEEE">
+            <span><b>Content:</b></span><span th:text="${post.content}">Post Content</span>
+        </div>
+        <div ><span>---</span></div>
+        <div>
+            <span><b>Tags:</b></span><span th:each="tag : ${post.tags}" th:text="${'#'+tag.tag+' '}">tag</span>
+        </div>
+        <div style="text-align: right">
+            <a href="/posts">Back to List</a>
+        </div>
+    </div>
+</body>
+</html>

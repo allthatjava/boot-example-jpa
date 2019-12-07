@@ -1,13 +1,12 @@
 package brian.example.boot.jpa.service;
 
-import java.util.ArrayList;
-import java.util.List;
-
+import brian.example.boot.jpa.domain.Post;
+import brian.example.boot.jpa.repository.PostRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import brian.example.boot.jpa.domain.Post;
-import brian.example.boot.jpa.repository.PostRepository;
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class PostService{
@@ -21,8 +20,8 @@ public class PostService{
 		this.repo = repo;
 	}
 	
-	public Post getPost(int postId) {
-		return repo.findByPostId(Integer.valueOf(postId));
+	public Post getPost(Integer postId) {
+		return repo.findByPostId(postId);
 	}
 	
 	public List<Post> getAllPosts() {

@@ -1,10 +1,11 @@
 package brian.example.boot.jpa.domain;
 
-import javax.persistence.*;
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "POST")
@@ -13,7 +14,7 @@ public class Post {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "post_id")
-    private int postId;
+    private Integer postId;
     @Column(name = "user_id", insertable = false, updatable = false)
     private String userId;		// Just to display the user Id
     private String subject;
@@ -24,20 +25,34 @@ public class Post {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="user_id", nullable = false)
     @JsonIgnore
-    private TestUser testUser;
+    private User testUser;
+
+    @ManyToMany
+    @JoinTable(name="POST_TAG", joinColumns = @JoinColumn(name="post_id"),
+            inverseJoinColumns = @JoinColumn(name="tag_id"))
+    @JsonIgnore
+    private Set<Tag> tags = new HashSet<>();
 
     public Post(){
     	this.createdDatetime = LocalDateTime.now();
     }
 
-    public Post(TestUser testUser, String subject, String content){
+    public Post(User testUser, String subject, String content){
         this.testUser = testUser;
         this.subject = subject;
         this.content = content;
         this.createdDatetime = LocalDateTime.now();
     }
 
-    public int getPostId() {
+    public Set<Tag> getTags() {
+        return tags;
+    }
+
+    public void setTags(Set<Tag> tags) {
+        this.tags = tags;
+    }
+
+    public Integer getPostId() {
         return postId;
     }
 
@@ -53,7 +68,7 @@ public class Post {
         return createdDatetime;
     }
 
-    public void setPostId(int postId) {
+    public void setPostId(Integer postId) {
         this.postId = postId;
     }
 
@@ -69,11 +84,11 @@ public class Post {
         this.createdDatetime = createdDatetime;
     }
 
-	public TestUser getTestUser() {
+	public User getTestUser() {
 		return testUser;
 	}
 
-	public void setTestUser(TestUser testUser) {
+	public void setTestUser(User testUser) {
 		this.testUser = testUser;
 	}
 

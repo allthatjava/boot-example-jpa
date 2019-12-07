@@ -2,9 +2,9 @@
 Example of JPA Application. Just for the testing purpose, Embedded H2 database is used. `master` branch has a minimum setup, please after read through the `master` branch, checkout the `step2` branch for further example.
 
 ## Environment
-* Framework : Spring Boot - 2.1.6
+* Framework : Spring Boot
 * ORM : JPA / Hibernate
-* Database : H2 - h2-2017-04-23
+* Database : H2
 * Unit Test : jUnit + AssertJ
 * Code Quality : Jacoco
 
@@ -28,7 +28,7 @@ Run the following SQL to create a table and add some initial test data
 
 #### Create Test Database
 ```
-CREATE TABLE TEST_USER(
+CREATE TABLE USER(
     USER_ID VARCHAR(10) PRIMARY KEY,
     PW VARCHAR(20) NOT NULL,
     NAME VARCHAR(20) NOT NULL,
@@ -42,16 +42,26 @@ CREATE TABLE POST(
     SUBJECT VARCHAR(50),
     CONTENT VARCHAR(200),
     CREATED_DATETIME DATETIME,
-    FOREIGN KEY (USER_ID) REFERENCES TEST_USER(USER_ID)
+    FOREIGN KEY (USER_ID) REFERENCES USER(USER_ID)
+);
+
+CREATE TABLE TAG(
+    TAG_ID INT AUTO_INCREMENT PRIMARY KEY,
+    TAG VARCHAR(200)
+);
+
+CREATE TABLE POST_TAG(
+    POST_ID INT,
+    TAG_ID INT
 );
 ```
 
 #### Add some test data
 ```
 // Hibernate side test data
-INSERT INTO TEST_USER(USER_ID, PW, NAME, TITLE, AGE) VALUES( 'tester1', '1234', 'Brian Heo', 'Sir', 42);
-INSERT INTO TEST_USER(USER_ID, PW, NAME, TITLE, AGE) VALUES('tester2', '1234', 'Phil Lee', 'Mr.', 42);
-INSERT INTO TEST_USER(USER_ID, PW, NAME, AGE) VALUES('tester3', '1234', 'Gerrard Lee', 43);
+INSERT INTO USER(USER_ID, PW, NAME, TITLE, AGE) VALUES( 'tester1', '1234', 'Brian Heo', 'Sir', 42);
+INSERT INTO USER(USER_ID, PW, NAME, TITLE, AGE) VALUES('tester2', '1234', 'Phil Lee', 'Mr.', 42);
+INSERT INTO USER(USER_ID, PW, NAME, AGE) VALUES('tester3', '1234', 'Gerrard Lee', 43);
 
 INSERT INTO POST(USER_ID, SUBJECT, CONTENT, CREATED_DATETIME) VALUES( 'tester1', 'Test Subject 1', 'Contents of Test subject 1', CURRENT_TIMESTAMP());
 INSERT INTO POST(USER_ID, SUBJECT, CONTENT, CREATED_DATETIME) VALUES( 'tester2', 'Test Subject 2', 'Contents of Test subject 2', CURRENT_TIMESTAMP());
@@ -62,6 +72,12 @@ INSERT INTO POST(USER_ID, SUBJECT, CONTENT, CREATED_DATETIME) VALUES( 'tester1',
 INSERT INTO POST(USER_ID, SUBJECT, CONTENT, CREATED_DATETIME) VALUES( 'tester1', 'Test Subject 7', 'Contents of Test subject 7', CURRENT_TIMESTAMP());
 INSERT INTO POST(USER_ID, SUBJECT, CONTENT, CREATED_DATETIME) VALUES( 'tester3', 'Test Subject 8', 'Contents of Test subject 8', CURRENT_TIMESTAMP());
 INSERT INTO POST(USER_ID, SUBJECT, CONTENT, CREATED_DATETIME) VALUES( 'tester1', 'Test Subject 9', 'Contents of Test subject 9', CURRENT_TIMESTAMP());
+
+INSERT INTO TAG(TAG) VALUES('Fun');
+INSERT INTO TAG(TAG) VALUES('Joke');
+
+INSERT INTO POST_TAG( POST_ID, TAG_ID) VALUES( 1, 1);
+INSERT INTO POST_TAG( POST_ID, TAG_ID) VALUES( 1, 2);
 ```
 
 #### H2 setup - (in application.properties)
@@ -110,6 +126,19 @@ Post.java
     @JoinColumn(name="user_id", nullable = false)
     @JsonIgnore
     private TestUser testUser;
+
+    @ManyToMany
+    @JoinTable(name="POST_TAG", joinColumns = @JoinColumn(name="post_id"),
+            inverseJoinColumns = @JoinColumn(name="tag_id"))
+    @JsonIgnore
+    private Set<Tag> tags = new HashSet<>();
+```
+Tag.java
+
+```java
+    ...
+    @ManyToMany(mappedBy="tags", fetch = FetchType.EAGER)
+    private Set<Post> posts = new HashSet<>();
 ```
 @JsonIgnore is added, so it won't fall into infinite loop when translated to JSON
 
