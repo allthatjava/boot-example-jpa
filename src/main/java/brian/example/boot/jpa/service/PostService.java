@@ -30,4 +30,8 @@ public class PostService{
 		
 		return list;
 	}
+
+	public Post save(Post post){
+		return repo.save(post);
+	}
 }

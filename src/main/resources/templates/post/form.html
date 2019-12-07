@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <!--/*@thymesVar id="postForm" type="brian.example.boot.jpa.form.PostForm"*/-->
+    <form action="#" th:action="@{/post}" th:object="${postForm}" method="post">
+        <p> Subject: <label><input type="text" name="subject" /></label></p>
+        <p> Content: <label><textarea name="content" ></textarea></label></p>
+        <p> Writer: <label><input type="text" name="user" value="tester1" /></label></p>
+
+        <p><input type="submit" value="Submit"/></p>
+    </form>
+</body>
+</html>

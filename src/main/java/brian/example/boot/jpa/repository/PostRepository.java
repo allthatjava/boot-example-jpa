@@ -9,4 +9,6 @@ import brian.example.boot.jpa.domain.Post;
 public interface PostRepository extends CrudRepository<Post, Integer>{
 	
 	public Post findByPostId(Integer postId);
+
+	public Post save(Post post);
 }
