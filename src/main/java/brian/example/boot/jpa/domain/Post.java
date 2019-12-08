@@ -25,7 +25,7 @@ public class Post {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="user_id", nullable = false)
     @JsonIgnore
-    private User testUser;
+    private User user;
 
     @ManyToMany
     @JoinTable(name="POST_TAG", joinColumns = @JoinColumn(name="post_id"),
@@ -38,10 +38,14 @@ public class Post {
     }
 
     public Post(User testUser, String subject, String content){
-        this.testUser = testUser;
+        this.user = testUser;
         this.subject = subject;
         this.content = content;
         this.createdDatetime = LocalDateTime.now();
+    }
+
+    public Post(int postId) {
+        this.postId = postId;
     }
 
     public Set<Tag> getTags() {
@@ -84,12 +88,12 @@ public class Post {
         this.createdDatetime = createdDatetime;
     }
 
-	public User getTestUser() {
-		return testUser;
+	public User getUser() {
+		return user;
 	}
 
-	public void setTestUser(User testUser) {
-		this.testUser = testUser;
+	public void setUser(User testUser) {
+		this.user = testUser;
 	}
 
 	public String getUserId() {

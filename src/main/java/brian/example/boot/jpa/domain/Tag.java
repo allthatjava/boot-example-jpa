@@ -12,11 +12,18 @@ public class Tag {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="tag_id")
     private Integer tagId;
-    @Column(name="tag")
-    private String tag;
+    @Column(name="name")
+    private String name;
 
     @ManyToMany(mappedBy="tags", fetch = FetchType.EAGER)
     private Set<Post> posts = new HashSet<>();
+
+    public Tag() {
+    }
+
+    public Tag(String tag) {
+        this.name = tag;
+    }
 
     public Integer getTagId() {
         return tagId;
@@ -26,12 +33,12 @@ public class Tag {
         this.tagId = id;
     }
 
-    public String getTag() {
-        return tag;
+    public String getName() {
+        return name;
     }
 
-    public void setTag(String tag) {
-        this.tag = tag;
+    public void setName(String tag) {
+        this.name = tag;
     }
 
     public Set<Post> getPosts() {

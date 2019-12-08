@@ -3,14 +3,26 @@
 <head>
     <meta charset="UTF-8">
     <title>User List</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/3.3.7/css/bootstrap.min.css} "/>
 </head>
 <body>
-    <div th:each="post : ${posts}" >
-        <a href="#" th:href="@{'/post/'+${post.postId}}" th:text="${post.subject}">Post Subject</a>
-    </div>
+<div class="container">
+    <table class="table table-striped">
+        <tbody>
+            <tr th:each="post : ${posts}" >
+                <td>
+                    <a href="#" th:href="@{'/post/'+${post.postId}}" th:text="${post.subject}">Post Subject</a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
     <div style="text-align: right">
-        <a href="/post">New Post</a>
-        <a href="/index">Back to Index</a>
+        <a class="btn btn-primary" href="/post">New Post</a>
     </div>
+    <script type="text/javascript" th:src="@{/webjars/jquery/3.1.1/jquery.min.js}"></script>
+    <script type="text/javascript" th:src="@{/webjars/bootstrap/3.3.7/js/bootstrap.min.js}" ></script>
+</div>
+<script type="text/javascript" th:src="@{/webjars/jquery/3.1.1/jquery.min.js}"></script>
+<script type="text/javascript" th:src="@{/webjars/bootstrap/3.3.7/js/bootstrap.min.js}" ></script>
 </body>
 </html>

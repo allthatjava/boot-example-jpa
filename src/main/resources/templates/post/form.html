@@ -3,15 +3,61 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/3.3.7/css/bootstrap.min.css} "/>
 </head>
 <body>
-    <!--/*@thymesVar id="postForm" type="brian.example.boot.jpa.form.PostForm"*/-->
+<div class="container">
+<!--/*@thymesVar id="postForm" type="brian.example.boot.jpa.form.PostForm"*/-->
     <form action="#" th:action="@{/post}" th:object="${postForm}" method="post">
-        <p> Subject: <label><input type="text" name="subject" /></label></p>
-        <p> Content: <label><textarea name="content" ></textarea></label></p>
-        <p> Writer: <label><input type="text" name="user" value="tester1" /></label></p>
-
-        <p><input type="submit" value="Submit"/></p>
+        <div class="col-md-1"><span><b>Subject:</b></span></div>
+        <div class="col-md-11">
+            <input name="subject" class="col-md-12" />
+        </div>
+        <div class="col-md-1"><span><b>Content:</b></span></div>
+        <div class="col-md-11">
+            <textarea name="content" class="col-md-12" ></textarea>
+        </div>
+        <div class="col-md-1"><span><b>Writer:</b></span></div>
+        <div class="col-md-11">
+            <select name="userId">
+                <option th:each="user : ${users}" th:value="${user.userId}" th:text="${user.name}" >User name</option>
+            </select>
+        </div>
+        <div class="col-md-1"><span><b>Tags:</b></span></div>
+        <div class="col-md-11">
+            <div class="field_wrapper">
+                <div>
+                    <input type="text" name="tag" value=""/>[<a href="javascript:void(0);" class="add_button" title="Add field">+</a>]
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6" >
+            <a class="btn btn-warning" href="/posts">Back to List</a>
+        </div>
+        <div class="col-md-6" style="text-align: right">
+            <input class="btn btn-primary" type="submit" value="Submit"/>
+        </div>
     </form>
+</div>
+<script type="text/javascript" th:src="@{/webjars/jquery/3.1.1/jquery.min.js}"></script>
+<script type="text/javascript" th:src="@{/webjars/bootstrap/3.3.7/js/bootstrap.min.js}" ></script>
+<script type="text/javascript">
+    $(document).ready(function() {
+
+        var addButton = $('.add_button'); //Add button selector
+        var wrapper = $('.field_wrapper'); //Input field wrapper
+        var fieldHTML = '<div><input type="text" name="tag" value=""/>[<a href="javascript:void(0);" ' +
+            'class="remove_button">-</a>]</div>'; //New input field html
+
+        $(addButton).click(function(){
+            $(wrapper).append(fieldHTML); //Add field html
+        });
+
+        $(wrapper).on('click', '.remove_button', function(e){
+            e.preventDefault();
+            $(this).parent('div').remove(); //Remove field html
+        });
+    });
+</script>
 </body>
 </html>

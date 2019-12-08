@@ -34,4 +34,8 @@ public class PostService{
 	public Post save(Post post){
 		return repo.save(post);
 	}
+
+    public void deletePost(int postId) {
+		repo.delete(new Post(postId));
+    }
 }

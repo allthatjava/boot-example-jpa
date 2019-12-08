@@ -5,8 +5,8 @@ public class PostForm {
     private int postId;
     private String subject;
     private String content;
-    private String user;
-    private String tags;
+    private String userId;
+    private String[] tag;
 
     public int getPostId() {
         return postId;
@@ -32,19 +32,19 @@ public class PostForm {
         this.content = content;
     }
 
-    public String getUser() {
-        return user;
+    public String getUserId() {
+        return userId;
     }
 
-    public void setUser(String user) {
-        this.user = user;
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 
-    public String getTags() {
-        return tags;
+    public String[] getTag() {
+        return tag;
     }
 
-    public void setTags(String tags) {
-        this.tags = tags;
+    public void setTag(String[] tag) {
+        this.tag = tag;
     }
 }

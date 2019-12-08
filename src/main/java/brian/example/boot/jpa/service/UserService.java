@@ -20,10 +20,14 @@ public class UserService {
 		this.repo = repo;
 	}
 	
-	public List<User> getAllTestUsers(){
+	public List<User> getAllUsers(){
 		List<User> users = new ArrayList<>();
 		repo.findAll().forEach(users::add);
 		
 		return users;
+	}
+
+	public User getUser(String userId){
+		return repo.findByUserId(userId);
 	}
 }

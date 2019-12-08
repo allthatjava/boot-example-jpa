@@ -1,28 +1,40 @@
 package brian.example.boot.jpa.controller;
 
 import brian.example.boot.jpa.domain.Post;
+import brian.example.boot.jpa.domain.Tag;
+import brian.example.boot.jpa.domain.User;
 import brian.example.boot.jpa.form.PostForm;
 import brian.example.boot.jpa.service.PostService;
+import brian.example.boot.jpa.service.TagService;
+import brian.example.boot.jpa.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
 @Controller
 public class PostController {
 
-	private PostService service;
+	private PostService postService;
+	private UserService userService;
+	private TagService tagService;
 	
 	public PostController() {}
 	
 	@Autowired
-	public PostController(PostService service) {
-		this.service = service;
+	public PostController(PostService service, UserService userService, TagService tagService) {
+		this.postService = service;
+		this.userService = userService;
+		this.tagService = tagService;
 	}
 	
-	@GetMapping(value={"/posts", "/posts/index.html"})
+	@GetMapping(value={ "", "/", "/posts", "/posts/index.html"})
 	public String getAllPosts(Model model) {
-		model.addAttribute("posts", service.getAllPosts());
+		model.addAttribute("posts", postService.getAllPosts());
 		
 		return "post/index";
 	}
@@ -30,13 +42,16 @@ public class PostController {
 	@GetMapping(value="/post/{postId}")
 	public String getPost(Model model, @PathVariable("postId") Integer postId)
 	{
-		model.addAttribute("post", service.getPost(postId));
+		model.addAttribute("post", postService.getPost(postId));
+		model.addAttribute( "users", userService.getAllUsers());
 
 		return "post/post";
 	}
 
 	@GetMapping(value="/post")
-	public String formPost(){
+	public String formPost(Model model){
+		model.addAttribute( "users", userService.getAllUsers());
+
 		return "post/form";
 	}
 
@@ -46,9 +61,22 @@ public class PostController {
 		Post post = new Post();
 		post.setSubject(postForm.getSubject());
 		post.setContent(postForm.getContent());
-		post.setUserId(postForm.getUser());
 
-		service.save(post);
+		User user = userService.getUser(postForm.getUserId());
+		post.setUserId(user.getUserId());
+		post.setUser(user);
+
+		// Save tags first
+		if( postForm.getTag() != null ) {
+			List<Tag> tagList = Stream.of(postForm.getTag())
+					.map(tag -> tagService.save(new Tag(tag)))
+					.collect(Collectors.toList());
+			// Add tags to Post
+			tagList.forEach(post.getTags()::add);
+		}
+
+		// Then save Post
+		postService.save(post);
 
 		return "redirect:/posts";
 	}
@@ -56,11 +84,36 @@ public class PostController {
 	@PutMapping(value="/post")
 	public String updatePost(@ModelAttribute PostForm postForm){
 
-		Post post = service.getPost(postForm.getPostId());
+		Post post = postService.getPost(postForm.getPostId());
 		post.setSubject(postForm.getSubject());
 		post.setContent(postForm.getContent());
 
-		service.save(post);
+		User user = userService.getUser(postForm.getUserId());
+		post.setUserId(user.getUserId());
+		post.setUser(user);
+
+		if( postForm.getTag() != null ) {
+			// Delete Tags and Add
+			post.getTags().forEach( tag -> tagService.delete(tag) );
+			post.getTags().clear();
+
+			// Save all tags
+			List<Tag> tagList = Stream.of(postForm.getTag())
+					.map(tag -> tagService.save(new Tag(tag)))
+					.collect(Collectors.toList());
+			// Add tags to Post
+			tagList.forEach(post.getTags()::add);
+		}
+
+		postService.save(post);
+
+		return "redirect:/posts";
+	}
+
+	@DeleteMapping(value="/post")
+	public String deletePost(@ModelAttribute PostForm postForm){
+
+		postService.deletePost(postForm.getPostId());
 
 		return "redirect:/posts";
 	}

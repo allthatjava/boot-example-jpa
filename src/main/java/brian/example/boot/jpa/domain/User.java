@@ -16,7 +16,7 @@ public class User {
     private String title;
     private int age;
     
-    @OneToMany( cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "testUser")
+    @OneToMany( cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "user")
     private Set<Post> posts = new HashSet<>();
 
     public User(){
