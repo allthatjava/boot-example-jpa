@@ -7,37 +7,49 @@
 </head>
 <body>
 <div class="container">
-<!--/*@thymesVar id="postForm" type="brian.example.boot.jpa.form.PostForm"*/-->
-    <form action="#" th:action="@{/post}" th:object="${postForm}" method="post">
-        <div class="col-md-1"><span><b>Subject:</b></span></div>
-        <div class="col-md-11">
-            <input name="subject" class="col-md-12" />
-        </div>
-        <div class="col-md-1"><span><b>Content:</b></span></div>
-        <div class="col-md-11">
-            <textarea name="content" class="col-md-12" ></textarea>
-        </div>
-        <div class="col-md-1"><span><b>Writer:</b></span></div>
-        <div class="col-md-11">
-            <select name="userId">
-                <option th:each="user : ${users}" th:value="${user.userId}" th:text="${user.name}" >User name</option>
-            </select>
-        </div>
-        <div class="col-md-1"><span><b>Tags:</b></span></div>
-        <div class="col-md-11">
-            <div class="field_wrapper">
-                <div>
-                    <input type="text" name="tag" value=""/>[<a href="javascript:void(0);" class="add_button" title="Add field">+</a>]
+
+    <div class="row">
+        <div class="col-md-6 col-md-offset-3">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <h1>Post Add</h1>
+                </div>
+                <div class="panel-body">
+                    <!--/*@thymesVar id="postForm" type="brian.example.boot.jpa.form.PostForm"*/-->
+                    <form action="#" th:action="@{/post}" th:object="${postForm}" method="post">
+                        <div class="col-md-3"><span><b>Subject:</b></span></div>
+                        <div class="col-md-9">
+                            <input name="subject" class="col-md-12" />
+                        </div>
+                        <div class="col-md-3"><span><b>Content:</b></span></div>
+                        <div class="col-md-9">
+                            <textarea name="content" class="col-md-12" ></textarea>
+                        </div>
+                        <div class="col-md-3"><span><b>Writer:</b></span></div>
+                        <div class="col-md-9">
+                            <select name="userId">
+                                <option th:each="user : ${users}" th:value="${user.userId}" th:text="${user.name}" >User name</option>
+                            </select>
+                        </div>
+                        <div class="col-md-3"><span><b>Tags:</b></span></div>
+                        <div class="col-md-9">
+                            <div class="field_wrapper">
+                                <div>
+                                    <input type="text" name="tag" value=""/>[<a href="javascript:void(0);" class="add_button" title="Add field">+</a>]
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6" >
+                            <a class="btn btn-warning" href="/posts">Back to List</a>
+                        </div>
+                        <div style="text-align: right">
+                            <input class="btn btn-primary" type="submit" value="Submit"/>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>
-        <div class="col-md-6" >
-            <a class="btn btn-warning" href="/posts">Back to List</a>
-        </div>
-        <div class="col-md-6" style="text-align: right">
-            <input class="btn btn-primary" type="submit" value="Submit"/>
-        </div>
-    </form>
+    </div>
 </div>
 <script type="text/javascript" th:src="@{/webjars/jquery/3.1.1/jquery.min.js}"></script>
 <script type="text/javascript" th:src="@{/webjars/bootstrap/3.3.7/js/bootstrap.min.js}" ></script>

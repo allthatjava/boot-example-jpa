@@ -6,41 +6,53 @@
 </head>
 <body>
 <div class="container">
-    <!--/*@thymesVar id="postForm" type="brian.example.boot.jpa.form.PostForm"*/-->
-    <form id="postUpdateForm" th:action="@{/post}" th:object="${postForm}" th:method="put">
-        <input name="postId" th:value="${post.postId}" th:hidden="hidden" />
-        <div class="col-md-1"><span><b>Subject:</b></span></div>
-        <div class="col-md-11">
-            <input name="subject" class="col-md-12" th:value="${post.subject}" />
+
+    <div class="row">
+        <div class="col-md-6 col-md-offset-3">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <h1>Post Edit</h1>
+                </div>
+                <div class="panel-body">
+                    <!--/*@thymesVar id="postForm" type="brian.example.boot.jpa.form.PostForm"*/-->
+                    <form id="postUpdateForm" th:action="@{/post}" th:object="${postForm}" th:method="put">
+                        <input name="postId" th:value="${post.postId}" th:hidden="hidden" />
+                        <div class="col-sm-3"><span><b>Subject:</b></span></div>
+                        <div class="col-sm-9">
+                            <input name="subject" class="col-md-12" th:value="${post.subject}" />
+                        </div>
+                        <div class="col-sm-3"><span><b>Content:</b></span></div>
+                        <div class="col-sm-9">
+                            <textarea name="content" class="col-md-12" th:text="${post.content}">Post Content</textarea>
+                        </div>
+                        <div class="col-sm-3" ><span><b>User:</b></span></div>
+                        <div class="col-sm-9" >
+                            <select name="userId" >
+                                <option th:each="user : ${users}" th:value="${user.userId}"
+                                        th:text="${user.name}" th:selected="${user.userId == post.user.userId}">User name</option>
+                            </select>
+                        </div>
+                        <div class="col-sm-3" ><span><b>Tags:</b></span></div>
+                        <div class="col-sm-9">
+                            &nbsp;
+                            <span th:each="tag : ${post.tags}" >
+                                <input name="tag" th:text="${'#'+tag.name+' '}" th:value="${tag.name}" hidden="hidden" />
+                                [<a href="#" th:data1="${tag.name}"
+                                    th:onclick="javascript:deleteTag(this.getAttribute('data1'));">X</a>]
+                            </span>
+                        </div>
+                        <div class="col-md-6" >
+                            <button class="btn btn-warning" href="/posts">Back to List</button>
+                            <button class="btn btn-primary" id="delBtn">Delete</button>
+                        </div>
+                        <div class="col-md-6" style="text-align: right">
+                            <input class="btn btn-primary" type="submit" value="Submit"/>
+                        </div>
+                    </form>
+                </div>
+            </div>
         </div>
-        <div class="col-md-1"><span><b>Content:</b></span></div>
-        <div class="col-md-11">
-            <textarea name="content" class="col-md-12" th:text="${post.content}">Post Content</textarea>
-        </div>
-        <div class="col-md-1" ><span><b>User:</b></span></div>
-        <div class="col-md-11" >
-            <select name="userId" >
-                <option th:each="user : ${users}" th:value="${user.userId}"
-                        th:text="${user.name}" th:selected="${user.userId == post.user.userId}">User name</option>
-            </select>
-        </div>
-        <div class="col-md-1" ><span><b>Tags:</b></span></div>
-        <div class="col-md-11">
-            &nbsp;
-            <span th:each="tag : ${post.tags}" >
-                <input name="tag" th:text="${'#'+tag.name+' '}" th:value="${tag.name}" hidden="hidden" />
-                [<a href="#" th:data1="${tag.name}"
-                    th:onclick="javascript:deleteTag(this.getAttribute('data1'));">X</a>]
-            </span>
-        </div>
-        <div class="col-md-6" >
-            <button class="btn btn-warning" href="/posts">Back to List</button>
-            <button class="btn btn-primary" id="delBtn">Delete</button>
-        </div>
-        <div class="col-md-6" style="text-align: right">
-            <input class="btn btn-primary" type="submit" value="Submit"/>
-        </div>
-    </form>
+    </div>
 </div>
 <script type="text/javascript" th:src="@{/webjars/jquery/3.1.1/jquery.min.js}"></script>
 <script type="text/javascript" th:src="@{/webjars/bootstrap/3.3.7/js/bootstrap.min.js}" ></script>
