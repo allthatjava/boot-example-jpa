@@ -9,8 +9,12 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
+import java.util.Arrays;
+import java.util.List;
+
 import static org.junit.Assert.assertEquals;
-import static org.mockito.Mockito.when;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.*;
 
 @RunWith(MockitoJUnitRunner.class)
 public class PostServiceTest {
@@ -47,13 +51,39 @@ public class PostServiceTest {
 
     @Test
     public void getAllPosts() {
+        // Given
+        Post p1 = new Post();
+        Post p2 = new Post();
+        List<Post> postList = Arrays.asList( p1, p2);
+
+        // When
+        when(postRepository.findAll()).thenReturn(postList);
+
+        // Test
+        List<Post> posts = postService.getAllPosts();
+
+        // Then
+        assertEquals(postList.size(), posts.size());
     }
 
     @Test
     public void save() {
+        // Given
+        Post post1 = new Post(1);
+        // When
+        when(postRepository.save(post1)).thenReturn(post1);
+        // Test
+        Post savedPost1 = postService.save(post1);
+        // Then
+        assertEquals(post1,savedPost1);
     }
 
     @Test
     public void deletePost() {
+        // When
+        postService.deletePost(1);
+
+        verify(postRepository, times(1)).delete(any());
     }
+
 }
