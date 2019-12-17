@@ -1,6 +1,6 @@
 package brian.example.boot.jpa.form;
 
-public class PostForm {
+public class FormPost {
 
     private int postId;
     private String subject;

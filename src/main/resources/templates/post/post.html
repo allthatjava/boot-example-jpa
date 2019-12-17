@@ -14,7 +14,7 @@
                     <h1>Post Edit</h1>
                 </div>
                 <div class="panel-body">
-                    <!--/*@thymesVar id="postForm" type="brian.example.boot.jpa.form.PostForm"*/-->
+                    <!--/*@thymesVar id="postForm" type="brian.example.boot.jpa.form.FormPost"*/-->
                     <form id="postUpdateForm" th:action="@{/post}" th:object="${postForm}" th:method="put">
                         <input name="postId" th:value="${post.postId}" th:hidden="hidden" />
                         <div class="col-sm-3"><span><b>Subject:</b></span></div>

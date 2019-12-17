@@ -3,7 +3,7 @@ package brian.example.boot.jpa.controller;
 import brian.example.boot.jpa.domain.Post;
 import brian.example.boot.jpa.domain.Tag;
 import brian.example.boot.jpa.domain.User;
-import brian.example.boot.jpa.form.PostForm;
+import brian.example.boot.jpa.form.FormPost;
 import brian.example.boot.jpa.service.PostService;
 import brian.example.boot.jpa.service.TagService;
 import brian.example.boot.jpa.service.UserService;
@@ -51,24 +51,24 @@ public class PostController {
 	@GetMapping(value="/post")
 	public String formPost(Model model){
 		model.addAttribute( "users", userService.getAllUsers());
-
+		model.addAttribute( "formPost", new FormPost());
 		return "post/form";
 	}
 
 	@PostMapping(value="/post")
-	public String insertPost(@ModelAttribute PostForm postForm){
+	public String insertPost(@ModelAttribute FormPost formPost){
 
 		Post post = new Post();
-		post.setSubject(postForm.getSubject());
-		post.setContent(postForm.getContent());
+		post.setSubject(formPost.getSubject());
+		post.setContent(formPost.getContent());
 
-		User user = userService.getUser(postForm.getUserId());
+		User user = userService.getUser(formPost.getUserId());
 		post.setUserId(user.getUserId());
 		post.setUser(user);
 
 		// Save tags first
-		if( postForm.getTag() != null ) {
-			List<Tag> tagList = Stream.of(postForm.getTag())
+		if( formPost.getTag() != null ) {
+			List<Tag> tagList = Stream.of(formPost.getTag())
 					.map(tag -> tagService.save(new Tag(tag)))
 					.collect(Collectors.toList());
 			// Add tags to Post
@@ -82,7 +82,7 @@ public class PostController {
 	}
 
 	@PutMapping(value="/post")
-	public String updatePost(@ModelAttribute PostForm postForm){
+	public String updatePost(@ModelAttribute FormPost postForm){
 
 		Post post = postService.getPost(postForm.getPostId());
 		post.setSubject(postForm.getSubject());
@@ -111,7 +111,7 @@ public class PostController {
 	}
 
 	@DeleteMapping(value="/post")
-	public String deletePost(@ModelAttribute PostForm postForm){
+	public String deletePost(@ModelAttribute FormPost postForm){
 
 		postService.deletePost(postForm.getPostId());
 
