@@ -1,8 +1,15 @@
-package brian.example.boot.jpa.repository;
+package brian.example.boot.jpa.controller;
 
-//@RunWith(SpringJUnit4ClassRunner.class)
-//@DataJpaTest
-public class PostRepositoryIntegrationTest {
+import org.junit.jupiter.api.Test;
+import org.springframework.boot.test.context.SpringBootTest;
+
+@SpringBootTest
+public class PostControllerIT {
+
+    @Test
+    public void test(){
+        System.out.println("Simple Integration Test");
+    }
 
 //    @PersistenceContext
 //    private EntityManager entityManager;

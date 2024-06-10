@@ -3,20 +3,20 @@ package brian.example.boot.jpa.service;
 import brian.example.boot.jpa.domain.Post;
 import brian.example.boot.jpa.domain.User;
 import brian.example.boot.jpa.repository.PostRepository;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
-import org.mockito.junit.MockitoJUnitRunner;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.Arrays;
 import java.util.List;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
-@RunWith(MockitoJUnitRunner.class)
+@ExtendWith(MockitoExtension.class)
 public class PostServiceTest {
 
     private PostService postService;
@@ -27,7 +27,7 @@ public class PostServiceTest {
 //    @Rule
 //    public MockitoRule rule = MockitoJUnit.rule();
 
-    @Before
+    @BeforeEach
     public void setup(){
         this.postService = new PostService(postRepository);
     }

@@ -166,6 +166,8 @@ public interface PostRepository extends CrudRepository<Post, Integer>{
 ## Unit Testing (TBD)
 
 ## Integration Test (TBD)
+if you want to skip the integration test while building the project  
+`mvn clean install -DskipITs=true`
 
 ## Code Quality Check (TBD)
 

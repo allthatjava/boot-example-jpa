@@ -1,12 +1,10 @@
-package brian.example.boot.jpa.repository;
+package brian.example.boot.jpa.controller;
 
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-@RunWith(SpringJUnit4ClassRunner.class)
+@ExtendWith(SpringExtension.class)
 @DataJpaTest
 public class UserRepositoryTest {
 
@@ -15,7 +13,7 @@ public class UserRepositoryTest {
 //    @Autowired
 //    PostRepository postRepo;
     
-    @Before
+//    @Before
     public void init() {
 //    	System.out.println("------------- Init ------------------------------ START");
 //    	User t1 = new User();
@@ -42,7 +40,7 @@ public class UserRepositoryTest {
 //    	System.out.println("------------- Init ------------------------------ END");
     }
     
-    @Test
+//    @Test
     public void testSave_withValidTestUser_shouldReturnTrue() {
 //    	System.out.println("------------- Save ------------------------------ START");
 //    	User t = new User();
@@ -55,7 +53,7 @@ public class UserRepositoryTest {
 //    	System.out.println("------------- Save ------------------------------ END");
     }
     
-    @Test
+//    @Test
     public void testFindAll_withNoParam_returnsList(){
 //    	System.out.println("------------- FindAll ------------------------------ START");
 //
@@ -66,7 +64,7 @@ public class UserRepositoryTest {
 //        System.out.println("------------- FindAll ------------------------------ END");
     }
  
-    @Test
+//    @Test
     public void testFindByUserId_withTester1_returnsTestUser(){
 //    	System.out.println("------------- Find by User Id ------------------------------ START");
 //        User tester1 = repo.findByUserId("tester1");
